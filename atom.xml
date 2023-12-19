@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-12-05T06:35:35.195Z</updated>
+  <updated>2023-12-19T01:39:01.136Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tags</title>
+    <link href="http://example.com/2023/12/19/tags/"/>
+    <id>http://example.com/2023/12/19/tags/</id>
+    <published>2023-12-19T01:29:16.000Z</published>
+    <updated>2023-12-19T01:39:01.136Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;标签&quot;&gt;&lt;a href=&quot;#标签&quot; class=&quot;headerlink&quot; title=&quot;标签&quot;&gt;&lt;/a&gt;标签&lt;/h3&gt;</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>第一篇文章</title>
