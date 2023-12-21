@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>tags</title>
+    <url>/2023/12/19/tags/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="5802d1c3fc139faefc0dc9f03d8383c21fc05d09efc385c7ba7bb6197d4cb6d6">4630436162ade97ba2718b7d0c4b3b63501b8b0e90dd70c68cacef77fafaa69cc85e4a10e1c69fc29f865d90233c0ef81470d73985a6ca113a1d4db5d4556de2d6b985550429bf4e4ff9da93c50de86b4341e0e1e457c1887106911267bad95884d499f2082ec868ea5afb0016785421</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码查看文章</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/12/05/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2023年冬信息技术优质课听课游记</title>
+    <url>/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/</url>
+    <content><![CDATA[<p>第一次去sgzx旁听信息技术优质课，此行目的就是学习他人之长处，补足自己之缺点。课程安排是上午3节，下午2节。主题均为《粤教版信息技术必修一4.4.1 for循环的应用》。本文主要记录听课过程中老师们的闪光点和问题，并借鉴提出自己的改进方向。先来打卡拍个照。</p>
+<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f1.jpg" alt="f1.jpq"></p>
+<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f2.jpg" alt></p>
+<span id="more"></span>
+<h3 id="sgez李老师"><a href="#sgez李老师" class="headerlink" title="sgez李老师"></a>sgez李老师</h3><p>我觉得这个老师讲的可谓槽点颇多，但评委貌似觉得他讲得还可以，因为能够顺利地把知识点传达清楚，<strong>简单也是一个亮点</strong>。</p>
+<p>缺点在于：</p>
+<ul>
+<li>上课未起立喊班</li>
+<li>印发的学案、PPT文字不完全一致、PPT很多无用的图 字</li>
+<li>讲解缩进时没有阐述清楚是 $4$ 个空格（当然后面我才想到默认以前的课程已经讲过这个知识点了）</li>
+<li>range() 的读音是“ruangao”？</li>
+<li>板书略微有点乱呢</li>
+<li>课堂小结处写的是“For 循环”（明明找错的时候大写的 $F$ 就不对，还最后这么写）</li>
+<li>讲课时没有在课堂内转动</li>
+<li>在学案上找出来一个较大错误：流程图用错符号而且还是死循环？</li>
+</ul>
+<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f3.png" alt></p>
+<p>优点：</p>
+<ul>
+<li>提出了一个简单又可实际操作的拍 $7$ 游戏（当时我就觉得这不是喝酒小游戏嘛hhh）</li>
+<li>遇到的随机学生很活跃，能够积极回答问题，显得本堂课很优质</li>
+<li>开局先分小组，最后也对小组计分进行了评价</li>
+</ul>
+<h3 id="sgez付老师"><a href="#sgez付老师" class="headerlink" title="sgez付老师"></a>sgez付老师</h3><p>付老师讲的我觉得是比前一个老师好的（教态、声音），但评委描述说内容太多，有为了结构完整而硬加的嫌疑，且学生配合程度较低，显得本节课不是那么的优质。</p>
+<p>缺点：</p>
+<ul>
+<li>学案字体杂乱，有截图，有大有小，排版布局不好</li>
+<li>分组计分没有利用起来，流于形式</li>
+<li>视频传授知识的部分较多，知识点过多</li>
+<li>案例是“选择最优借贷方式”，对学生不友好，距离太远</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>让学生自主运行代码，体验缩进的区别，循循善诱</li>
+<li>学案结构完整，有自我评价、作业上交、课后思考，但存在硬凑嫌疑</li>
+<li>最后有一句话上升价值，思政效果好</li>
+</ul>
+<h3 id="xdzx李老师"><a href="#xdzx李老师" class="headerlink" title="xdzx李老师"></a>xdzx李老师</h3><p>李老师在本堂课的表现还是让我耳目一新的，确实是认真起来了。但评委觉得课堂很沉闷，一直在点学生回答问题。到本节课我已经开始疲惫了，听不下去了快hh。</p>
+<p>缺点：</p>
+<ul>
+<li><p>一些小错误，已经不去记录了~~</p>
+</li>
+<li><p>学生回答积极性不高，老师运用软件能力有待提高</p>
+</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>开头放亚运会高燃视频，由统计金牌数引出for循环，语言组织还不错呢</li>
+</ul>
+<hr>
+<p>上午的听课就结束了，本来说是能管饭，后面因各种原因让我们自己出去吃。学校在镇上，好吃的选择有两个：羊肉汤 or 拉面，想着可能长时间不会来一次，就去吃了前者，据说在当地还很出名呢。 其实也就那样  </p>
+<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f4.jpg" alt></p>
+<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f5.jpg" alt></p>
+<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f6.jpg" alt></p>
+<hr>
+<p>在办公室休息了一会，冬日阳光真好，继续下午的听课。</p>
+<h3 id="xdzx-张老师"><a href="#xdzx-张老师" class="headerlink" title="xdzx 张老师"></a>xdzx 张老师</h3><p>学姐的课已经听了一次了，根本没有问题，能顺利讲下来就是很大的成功。</p>
+<p>优点：</p>
+<ul>
+<li>开篇视频《跪行巨人》，由捐款引出for循环（地震受灾），有思政价值</li>
+<li>能分析问题，抽象数学模型</li>
+<li>探究活动，由自然语言到流程图</li>
+<li>板书还得继续练</li>
+</ul>
+<h3 id="sgyz-寇老师"><a href="#sgyz-寇老师" class="headerlink" title="sgyz 寇老师"></a>sgyz 寇老师</h3><p>到此已经听不下去了，还得坚持！</p>
+<p>缺点：</p>
+<ul>
+<li>只是说开始上课，没有喊班（问题不大）</li>
+<li>这个姐也是很厉害的，就是有个口头禅 “$i$”</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>由《袁隆平杂交水稻》亩产的变化引出 $print$ 语句和 $for$ 循环</li>
+<li>能用动画展示for循环一般格式及使用方法</li>
+<li>用扩音器，声音可以</li>
+</ul>
+<h3 id="个人反思"><a href="#个人反思" class="headerlink" title="个人反思"></a>个人反思</h3><ol>
+<li>读课标，讲课的首要任务是能把知识点给学生传递清楚，不能过于追求结构完整</li>
+<li>板书还得需要练，关键时候是个很强的加分项</li>
+<li>声音要洪亮</li>
+<li>开头结尾要把握好，不一定是视频，但一定要有新意，也要让学生参与进来。要体现思政课思想</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>信息技术</tag>
+        <tag>优质课</tag>
+      </tags>
+  </entry>
+</search>
