@@ -1,173 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>LC 440.字典序最小的第K小数字</title>
-    <url>/2023/12/28/LC%20440.%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E7%AC%ACK%E5%B0%8F%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这是 LeetCode 上的 440.字典序最小的第K小数字，难度为 <strong>困难</strong>。</p>
-<p>给定整数 <code>n</code> 和 <code>k</code>，返回 <code>[1, n]</code> 中字典序第 <code>k</code> 小的数字。</p>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: n = 13, k = 2</span><br><span class="line">输出: 10</span><br><span class="line">解释: 字典序的排列是 [1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9]，所以第二小的数字是 10。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: n = 1, k = 1</span><br><span class="line">输出: 1</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li>$1 \le  k \le n \le 10^9$ </li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>从 $1$ 开始，在有限范围内寻找字典序的过程可以抽象为 <strong>$9$ 个十叉树（每个结点的值可以记为从根节点到本结点的前序遍历的结果）的前序遍历</strong>。</p>
-<p>寻找以 $x$ 为前缀的且小于等于 $y$ 范围内的数的个数等价于求以 $x$ 为 根节点的子树的前序遍历不同结果的个数。</p>
-<p>因此，寻找 $[1,y]$ 中字典序第 $k$ 小的数字可以分为两步完成。</p>
-<ol>
-<li>求以 $x$ 为前缀，且小于等于 $y$ 范围内的数的个数，记为 $int~getcnt(int~x,int~y)~-&gt;cnt$</li>
-<li>判断 $cnt$ 与 $k$ 的关系<ul>
-<li>若 $cnt &lt; k$，说明以 $x$ 为前缀的所有数不会存在第 $k$ 小的（以 $x$ 为根的子树均不符合条件），还要继续往后找，所以要跳到与 $x$ 齐平的下一个子树上去，且 $k$ 要减去 $x$ 这棵子树上的所有数字，即 $x++,k-=cnt;$</li>
-<li>若 $cnt\ge k$，说明字典序第 $k$ 小的数字就在以 $x$ 为前缀的数字集合中（在以 $x$ 为根的子树上），那么我们就要继续往下探索，寻找字典序比 $x$ 大 $1$ 的数字去继续判断，此时 $x$ 本身已不符合条件，故需 $x=x*10, k—;$   </li>
-</ul>
-</li>
-</ol>
-<p>循环判断的停止条件为当 $k==1$ 时结束，说明此时要找的字典序第 $k$ 小的数字就是 $x$ 本身。</p>
-<p>然后来看第一步的函数 $getcnt(x,y)$ 如何完成。</p>
-<p>不妨设设数字 $x$ 有 $p$ 位，数字 $y$ 有 $q$ 位，则 $p \le q$</p>
-<p>我们需要在 $x$ 后面不断地补齐数字，设当前在 $x$ 后面补的数字的位数为 $k(0\le k \le q-p)$，当补的位数为 $k$ 时增加的数字的个数为 $t$，可进行分类讨论：</p>
-<ul>
-<li>若 $k=0$，则 $t=1$，为 $x$ 本身</li>
-<li>若 $k=1$，则 $t=10^1$</li>
-<li>若 $k=2$，则 $t=10^2$</li>
-<li>若 $k=3$，则 $t=10^3$</li>
-<li>…</li>
-<li>若 $k=q-p-1$，则 $t=10^{q-p-1}$</li>
-<li>若 $k=q-p$，则需要分类讨论，设 $y$ 的前 $p$ 位数字为 $m$（和 $x$ 对齐）<ul>
-<li>若 $m&gt;x$，则 $t=10^{q-p}$ （后面这 $k$ 位随便选）</li>
-<li>若 $m=x$，则 $t=y-x*10^{q-p}+1$ （有限制的选择，不能大于 $y$）</li>
-<li>若 $m&lt;x$，则 $t=0$ （哪怕后面全是 $0$，也已经大于 $y$ 了）</li>
-</ul>
-</li>
-</ul>
-<p>举例 $x=123,y=12567$，当 $k=5-3=2$ 时，$m=125&gt;x=123$，故此时能选择的数字有 $10^2=100$ 个。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getcnt</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="comment">// 寻找以x为前缀(根)，在y范围内的数的个数</span></span><br><span class="line">        <span class="type">int</span> m = <span class="number">0</span>, n = <span class="number">0</span>; <span class="comment">// m为x的位数,n为y的位数</span></span><br><span class="line">        <span class="type">int</span> t = x;</span><br><span class="line">        <span class="keyword">while</span> (t &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            m ++ ;</span><br><span class="line">            t /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        t = y;</span><br><span class="line">        <span class="keyword">while</span> (t &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            n ++ ;</span><br><span class="line">            t /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        t = y;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n - m; i ++ ) t /= <span class="number">10</span>;</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - m ; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            ans += <span class="built_in">pow</span>(<span class="number">10</span>, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (t &gt; x) ans += <span class="built_in">pow</span>(<span class="number">10</span>, n - m);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (t == x) ans += y - x * <span class="built_in">pow</span>(<span class="number">10</span>, n - m) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findKthNumber</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> cnt = <span class="built_in">getcnt</span>(x, n);</span><br><span class="line">            <span class="comment">// cout &lt;&lt; x &lt;&lt; &quot; &quot; &lt;&lt; cnt &lt;&lt; &quot; &quot; &lt;&lt; k &lt;&lt; endl;</span></span><br><span class="line">            <span class="keyword">if</span> (cnt &lt; k) x ++, k -= cnt;</span><br><span class="line">            <span class="keyword">else</span> x = x * <span class="number">10</span>, k -- ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
-<p>日拱一卒无有尽，功不唐捐终入海</p>
-<p>这是我们「刷穿算法题」系列文章的第<code>No.0003</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
-<p>同时我也建立了相关仓库：（待完善）</p>
-<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
-]]></content>
-      <tags>
-        <tag>模拟</tag>
-        <tag>思维</tag>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LC 735.小行星碰撞</title>
-    <url>/2023/12/26/LC%20735.%E5%B0%8F%E8%A1%8C%E6%98%9F%E7%A2%B0%E6%92%9E/</url>
-    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这是 LeetCode 上的 735.小行星碰撞，难度为 <strong>中等</strong>。</p>
-<p>给定一个整数数组 <code>asteroids</code>，表示在同一行的小行星。</p>
-<p>对于数组中的每一个元素，其绝对值表示小行星的大小，正负表示小行星的移动方向（正表示向右移动，负表示向左移动）。每一颗小行星以相同的速度移动。</p>
-<p>找出碰撞后剩下的所有小行星。碰撞规则：两个小行星相互碰撞，较小的小行星会爆炸。如果两颗小行星大小相同，则两颗小行星都会爆炸。两颗移动方向相同的小行星，永远不会发生碰撞。</p>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：asteroids = [5,10,-5]</span><br><span class="line">输出：[5,10]</span><br><span class="line">解释：10 和 -5 碰撞后只剩下 10 。 5 和 10 永远不会发生碰撞。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：asteroids = [8,-8]</span><br><span class="line">输出：[]</span><br><span class="line">解释：8 和 -8 碰撞后，两者都发生爆炸。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>示例 3：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：asteroids = [10,2,-5]</span><br><span class="line">输出：[10]</span><br><span class="line">解释：2 和 -5 发生碰撞后剩下 -5 。10 和 -5 发生碰撞后剩下 10 。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li>$2&lt;=asteroids.length&lt;=10^4$</li>
-<li><code>-1000 &lt;= asteroids[i] &lt;= 1000</code></li>
-<li><code>asteroids[i] != 0</code></li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>每个行星的运动速度是相同的，如果存在行星 $i$ 向右，行星 $j$ 向左，且二者相邻，那么这两个行星必然会发生碰撞，根据规则判断还剩下几个。</p>
-<p>所以可以模拟一个左右横着的栈 $ans$（右边进，右边出，顶部在最右边）。枚举现在数组中的行星 $i$</p>
-<ul>
-<li>1 如果 $asteroids[i]&lt;0$，则观察 $ans$ 的顶部行星 $j$<ul>
-<li>1-1 若 $asteroids[j]&lt;0$ 或者为空，则 $i$ 入栈</li>
-<li>1-2 若 $asteroids[j]&gt;0$，则 $i,j$ 发生碰撞。<ul>
-<li>若碰撞后 $i$ 消失（也可能和 $j$ 同步消失），则 $i++$，重新枚举</li>
-<li>若碰撞后 $j$ 消失出栈，且 $i$ 未消失，则回到步骤 $1$ </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>2 如果 $asteroids[i]&gt;0$，则直接入栈（此时如果栈顶行星是向向左，则必然栈内所有的行星都是向左的，否则矛盾；如果栈顶行星是向右，则必然是泾渭分明，栈内连续的左边一部分是全部向左，栈内连续的右边一部分是向右）</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">asteroidCollision</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> t: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">bool</span> ok = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">while</span> (!ans.<span class="built_in">empty</span>() &amp;&amp; ans.<span class="built_in">back</span>() &gt; <span class="number">0</span> &amp;&amp; t &lt; <span class="number">0</span>)</span><br><span class="line">            &#123; <span class="comment">// 产生冲突</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">abs</span>(ans.<span class="built_in">back</span>()) &lt; <span class="built_in">abs</span>(t)) ans.<span class="built_in">pop_back</span>();</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">abs</span>(ans.<span class="built_in">back</span>()) == <span class="built_in">abs</span>(t)) </span><br><span class="line">                &#123;</span><br><span class="line">                    ans.<span class="built_in">pop_back</span>();</span><br><span class="line">                    ok = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">abs</span>(ans.<span class="built_in">back</span>()) &gt; <span class="built_in">abs</span>(t)) </span><br><span class="line">                &#123;</span><br><span class="line">                    ok = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (ok) ans.<span class="built_in">push_back</span>(t);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 同样的思路，多设了一个数组来存储向右的行星。注意分类讨论的时候要不重不漏</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">asteroidCollision</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans, ls;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &lt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (ls.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    ans.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">while</span> (!ls.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">abs</span>(ls.<span class="built_in">back</span>()) &lt; <span class="built_in">abs</span>(nums[i]))</span><br><span class="line">                        ls.<span class="built_in">pop_back</span>(); <span class="comment">// 先把向右的、绝对值小的剔除</span></span><br><span class="line">                    <span class="keyword">if</span> (!ls.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">abs</span>(ls.<span class="built_in">back</span>()) == <span class="built_in">abs</span>(nums[i]))</span><br><span class="line">                    &#123; <span class="comment">// 绝对值相等则都剔除，均不进入ans</span></span><br><span class="line">                        ls.<span class="built_in">pop_back</span>();</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!ls.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">abs</span>(ls.<span class="built_in">back</span>()) &gt; <span class="built_in">abs</span>(nums[i]))</span><br><span class="line">                        <span class="keyword">continue</span>; <span class="comment">// 若向右的绝对值大于向左的绝对值，则不操作，等最后一齐把ls中剩余的元素进入ans</span></span><br><span class="line">                    <span class="keyword">else</span> </span><br><span class="line">                        ans.<span class="built_in">push_back</span>(nums[i]); <span class="comment">// 否则让当前的向左的行星进入ans</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                ls.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 只要有向右的和向左的，那么必然要么把向右的全部干掉，要么干掉一部分向右的，然后这个向左的被干掉</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> x: ls)</span><br><span class="line">            ans.<span class="built_in">push_back</span>(x);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
-<p>日拱一卒无有尽，功不唐捐终入海</p>
-<p>这是我们「刷穿算法题」系列文章的第<code>No.0002</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
-<p>同时我也建立了相关仓库：（待完善）</p>
-<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
-]]></content>
-      <tags>
-        <tag>模拟</tag>
-        <tag>栈</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LC 16. 最接近的三数之和</title>
-    <url>/2023/12/26/LC%2016.%20%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
-    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这是 LeetCode 上的 <a href="https://leetcode.cn/problems/3sum-closest/description/">16. 最接近的三数之和</a>，难度为 <strong>中等</strong>。</p>
-<p>给你一个长度为 <code>n</code> 的整数数组 <code>nums</code> 和 一个目标值 <code>target</code>。请你从 <code>nums</code> 中选出三个整数，使它们的和与 <code>target</code> 最接近。</p>
-<p>返回这三个数的和。</p>
-<p>假定每组输入只存在恰好一个解。</p>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [-1,2,1,-4], target = 1</span><br><span class="line">输出：2</span><br><span class="line">解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2) 。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [0,0,0], target = 1</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>3 &lt;= nums.length &lt;= 1000</code></li>
-<li><code>-1000 &lt;= nums[i] &lt;= 1000</code></li>
-<li>$-10^4 &lt;= target &lt;=10^4$</li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><strong>错误思路</strong></p>
-<p>一上来就想了个错误思路，通过了 70/100。</p>
-<p>先把给定序列排序，然后二分查找大于等于 $target$ 的第一个数的下标位置 $pos$，寻找离 $pos$ 左右最近的 $4$ 个位置 $pos - 2, pos-1,pos+1,pos+2$ 进而找到与目标值 $target$ 的差的绝对值最小的三个数的和。</p>
-<p>发现根本不可行，例如：</p>
-<blockquote>
-<p>输入nums = [-4, -3, 0, 0, 2, 3, 3, 4, 4], target = 4</p>
-</blockquote>
-<p>明显可以直接凑出一个 $4$ 来，但按上述错误思路却会把周边的两个数也给加上，让结果偏差反而更大了。</p>
-<p><strong>正确思路</strong></p>
-<p>排序后，设 $i,j,k$ 三个循环去枚举。因三个循环 $O(n^3)$ 必然会超时，故需把 $j,k$ 的操作优化为双指针。具体操作为：</p>
-<ul>
-<li>初始化 $j = i+1,k=n-1(n=nums.size())$</li>
-<li>设当前求和为 $sum=nums[i]+nums[j]+nums[k]$</li>
-<li>如果 $sum&lt;target$，则 $j++$（在 $i$ 不动的前提下，$sum$ 将会变大，且不会重复也不会漏下其他可能的三数之和情况）</li>
-<li>如果 $sum &gt; target$，则 $k—$</li>
-<li>如果 $sum=target$，则结束程序输出结果</li>
-<li>记录当前最优结果，如果 $abs(ans-target)&lt;abs(sum-target)$，则 $ans=sum$</li>
-<li>输出 $ans$</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">threeSumClosest</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">1e9</span>;   </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> j = i + <span class="number">1</span>, k = n - <span class="number">1</span>, sum = nums[i];</span><br><span class="line">            <span class="keyword">while</span> (j &lt; k)</span><br><span class="line">            &#123;</span><br><span class="line">                sum = nums[i] + nums[j] + nums[k];</span><br><span class="line">                <span class="keyword">if</span> (sum &lt; target) j ++ ;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (sum &gt; target) k -- ;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> sum;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">abs</span>(ans - target) &gt; <span class="built_in">abs</span>(sum - target)) ans = sum;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误的二分查找代码（）</span></span><br><span class="line">    <span class="type">int</span> pos = <span class="built_in">lower_bound</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), target) - nums.<span class="built_in">begin</span>();</span><br><span class="line">    cout &lt;&lt; pos &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (pos == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ans =  nums[<span class="number">0</span>] + nums[<span class="number">1</span>] + nums[<span class="number">2</span>];</span><br><span class="line">        <span class="comment">// cout &lt;&lt; ans &lt;&lt; endl;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (pos == n || pos == n - <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ans = nums[n - <span class="number">1</span>] + nums[n - <span class="number">2</span>] + nums[n - <span class="number">3</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        ans = nums[pos] + nums[pos - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">3</span>) ans += nums[pos + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(target - nums[pos + <span class="number">1</span>]) &lt;= <span class="built_in">abs</span>(target - nums[pos - <span class="number">2</span>]))</span><br><span class="line">                ans += nums[pos + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                ans += nums[pos - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
-<p>日拱一卒无有尽，功不唐捐终入海</p>
-<p>这是我们「刷穿算法题」系列文章的第<code>No.0001</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
-<p>同时我也建立了相关仓库：（待完善）</p>
-<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
-]]></content>
-      <tags>
-        <tag>排序</tag>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023年冬信息技术优质课听课游记</title>
     <url>/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/</url>
     <content><![CDATA[<p>第一次去sgzx旁听信息技术优质课，此行目的就是学习他人之长处，补足自己之缺点。课程安排是上午3节，下午2节。主题均为《粤教版信息技术必修一4.4.1 for循环的应用》。本文主要记录听课过程中老师们的闪光点和问题，并借鉴提出自己的改进方向。先来打卡拍个照。</p>
@@ -259,6 +92,174 @@
       </tags>
   </entry>
   <entry>
+    <title>LC 16. 最接近的三数之和</title>
+    <url>/2023/12/26/LC%2016.%20%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这是 LeetCode 上的 <a href="https://leetcode.cn/problems/3sum-closest/description/">16. 最接近的三数之和</a>，难度为 <strong>中等</strong>。</p>
+<p>给你一个长度为 <code>n</code> 的整数数组 <code>nums</code> 和 一个目标值 <code>target</code>。请你从 <code>nums</code> 中选出三个整数，使它们的和与 <code>target</code> 最接近。</p>
+<p>返回这三个数的和。</p>
+<p>假定每组输入只存在恰好一个解。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [-1,2,1,-4], target = 1</span><br><span class="line">输出：2</span><br><span class="line">解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2) 。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [0,0,0], target = 1</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>3 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>-1000 &lt;= nums[i] &lt;= 1000</code></li>
+<li>$-10^4 &lt;= target &lt;=10^4$</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><strong>错误思路</strong></p>
+<p>一上来就想了个错误思路，通过了 70/100。</p>
+<p>先把给定序列排序，然后二分查找大于等于 $target$ 的第一个数的下标位置 $pos$，寻找离 $pos$ 左右最近的 $4$ 个位置 $pos - 2, pos-1,pos+1,pos+2$ 进而找到与目标值 $target$ 的差的绝对值最小的三个数的和。</p>
+<p>发现根本不可行，例如：</p>
+<blockquote>
+<p>输入nums = [-4, -3, 0, 0, 2, 3, 3, 4, 4], target = 4</p>
+</blockquote>
+<p>明显可以直接凑出一个 $4$ 来，但按上述错误思路却会把周边的两个数也给加上，让结果偏差反而更大了。</p>
+<p><strong>正确思路</strong></p>
+<p>排序后，设 $i,j,k$ 三个循环去枚举。因三个循环 $O(n^3)$ 必然会超时，故需把 $j,k$ 的操作优化为双指针。具体操作为：</p>
+<ul>
+<li>初始化 $j = i+1,k=n-1(n=nums.size())$</li>
+<li>设当前求和为 $sum=nums[i]+nums[j]+nums[k]$</li>
+<li>如果 $sum&lt;target$，则 $j++$（在 $i$ 不动的前提下，$sum$ 将会变大，且不会重复也不会漏下其他可能的三数之和情况）</li>
+<li>如果 $sum &gt; target$，则 $k—$</li>
+<li>如果 $sum=target$，则结束程序输出结果</li>
+<li>记录当前最优结果，如果 $abs(ans-target)&lt;abs(sum-target)$，则 $ans=sum$</li>
+<li>输出 $ans$</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">threeSumClosest</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">1e9</span>;   </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> j = i + <span class="number">1</span>, k = n - <span class="number">1</span>, sum = nums[i];</span><br><span class="line">            <span class="keyword">while</span> (j &lt; k)</span><br><span class="line">            &#123;</span><br><span class="line">                sum = nums[i] + nums[j] + nums[k];</span><br><span class="line">                <span class="keyword">if</span> (sum &lt; target) j ++ ;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (sum &gt; target) k -- ;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> sum;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">abs</span>(ans - target) &gt; <span class="built_in">abs</span>(sum - target)) ans = sum;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误的二分查找代码（）</span></span><br><span class="line">    <span class="type">int</span> pos = <span class="built_in">lower_bound</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), target) - nums.<span class="built_in">begin</span>();</span><br><span class="line">    cout &lt;&lt; pos &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (pos == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ans =  nums[<span class="number">0</span>] + nums[<span class="number">1</span>] + nums[<span class="number">2</span>];</span><br><span class="line">        <span class="comment">// cout &lt;&lt; ans &lt;&lt; endl;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (pos == n || pos == n - <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ans = nums[n - <span class="number">1</span>] + nums[n - <span class="number">2</span>] + nums[n - <span class="number">3</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        ans = nums[pos] + nums[pos - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">3</span>) ans += nums[pos + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(target - nums[pos + <span class="number">1</span>]) &lt;= <span class="built_in">abs</span>(target - nums[pos - <span class="number">2</span>]))</span><br><span class="line">                ans += nums[pos + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                ans += nums[pos - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
+<p>日拱一卒无有尽，功不唐捐终入海</p>
+<p>这是我们「刷穿算法题」系列文章的第<code>No.0001</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
+<p>同时我也建立了相关仓库：（待完善）</p>
+<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
+]]></content>
+      <tags>
+        <tag>排序</tag>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LC 440.字典序最小的第K小数字</title>
+    <url>/2023/12/28/LC%20440.%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E7%AC%ACK%E5%B0%8F%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这是 LeetCode 上的 440.字典序最小的第K小数字，难度为 <strong>困难</strong>。</p>
+<p>给定整数 <code>n</code> 和 <code>k</code>，返回 <code>[1, n]</code> 中字典序第 <code>k</code> 小的数字。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: n = 13, k = 2</span><br><span class="line">输出: 10</span><br><span class="line">解释: 字典序的排列是 [1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9]，所以第二小的数字是 10。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: n = 1, k = 1</span><br><span class="line">输出: 1</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>$1 \le  k \le n \le 10^9$ </li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>从 $1$ 开始，在有限范围内寻找字典序的过程可以抽象为 <strong>$9$ 个十叉树（每个结点的值可以记为从根节点到本结点的前序遍历的结果）的前序遍历</strong>。</p>
+<p>寻找以 $x$ 为前缀的且小于等于 $y$ 范围内的数的个数等价于求以 $x$ 为 根节点的子树的前序遍历不同结果的个数。</p>
+<p>因此，寻找 $[1,y]$ 中字典序第 $k$ 小的数字可以分为两步完成。</p>
+<ol>
+<li>求以 $x$ 为前缀，且小于等于 $y$ 范围内的数的个数，记为 $int~getcnt(int~x,int~y)~-&gt;cnt$</li>
+<li>判断 $cnt$ 与 $k$ 的关系<ul>
+<li>若 $cnt &lt; k$，说明以 $x$ 为前缀的所有数不会存在第 $k$ 小的（以 $x$ 为根的子树均不符合条件），还要继续往后找，所以要跳到与 $x$ 齐平的下一个子树上去，且 $k$ 要减去 $x$ 这棵子树上的所有数字，即 $x++,k-=cnt;$</li>
+<li>若 $cnt\ge k$，说明字典序第 $k$ 小的数字就在以 $x$ 为前缀的数字集合中（在以 $x$ 为根的子树上），那么我们就要继续往下探索，寻找字典序比 $x$ 大 $1$ 的数字去继续判断，此时 $x$ 本身已不符合条件，故需 $x=x*10, k—;$   </li>
+</ul>
+</li>
+</ol>
+<p>循环判断的停止条件为当 $k==1$ 时结束，说明此时要找的字典序第 $k$ 小的数字就是 $x$ 本身。</p>
+<p>然后来看第一步的函数 $getcnt(x,y)$ 如何完成。</p>
+<p>不妨设设数字 $x$ 有 $p$ 位，数字 $y$ 有 $q$ 位，则 $p \le q$</p>
+<p>我们需要在 $x$ 后面不断地补齐数字，设当前在 $x$ 后面补的数字的位数为 $k(0\le k \le q-p)$，当补的位数为 $k$ 时增加的数字的个数为 $t$，可进行分类讨论：</p>
+<ul>
+<li>若 $k=0$，则 $t=1$，为 $x$ 本身</li>
+<li>若 $k=1$，则 $t=10^1$</li>
+<li>若 $k=2$，则 $t=10^2$</li>
+<li>若 $k=3$，则 $t=10^3$</li>
+<li>…</li>
+<li>若 $k=q-p-1$，则 $t=10^{q-p-1}$</li>
+<li>若 $k=q-p$，则需要分类讨论，设 $y$ 的前 $p$ 位数字为 $m$（和 $x$ 对齐）<ul>
+<li>若 $m&gt;x$，则 $t=10^{q-p}$ （后面这 $k$ 位随便选）</li>
+<li>若 $m=x$，则 $t=y-x*10^{q-p}+1$ （有限制的选择，不能大于 $y$）</li>
+<li>若 $m&lt;x$，则 $t=0$ （哪怕后面全是 $0$，也已经大于 $y$ 了）</li>
+</ul>
+</li>
+</ul>
+<p>举例 $x=123,y=12567$，当 $k=5-3=2$ 时，$m=125&gt;x=123$，故此时能选择的数字有 $10^2=100$ 个。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getcnt</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="comment">// 寻找以x为前缀(根)，在y范围内的数的个数</span></span><br><span class="line">        <span class="type">int</span> m = <span class="number">0</span>, n = <span class="number">0</span>; <span class="comment">// m为x的位数,n为y的位数</span></span><br><span class="line">        <span class="type">int</span> t = x;</span><br><span class="line">        <span class="keyword">while</span> (t &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            m ++ ;</span><br><span class="line">            t /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        t = y;</span><br><span class="line">        <span class="keyword">while</span> (t &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            n ++ ;</span><br><span class="line">            t /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        t = y;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n - m; i ++ ) t /= <span class="number">10</span>;</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - m ; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            ans += <span class="built_in">pow</span>(<span class="number">10</span>, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (t &gt; x) ans += <span class="built_in">pow</span>(<span class="number">10</span>, n - m);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (t == x) ans += y - x * <span class="built_in">pow</span>(<span class="number">10</span>, n - m) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findKthNumber</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> cnt = <span class="built_in">getcnt</span>(x, n);</span><br><span class="line">            <span class="comment">// cout &lt;&lt; x &lt;&lt; &quot; &quot; &lt;&lt; cnt &lt;&lt; &quot; &quot; &lt;&lt; k &lt;&lt; endl;</span></span><br><span class="line">            <span class="keyword">if</span> (cnt &lt; k) x ++, k -= cnt;</span><br><span class="line">            <span class="keyword">else</span> x = x * <span class="number">10</span>, k -- ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
+<p>日拱一卒无有尽，功不唐捐终入海</p>
+<p>这是我们「刷穿算法题」系列文章的第<code>No.0003</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
+<p>同时我也建立了相关仓库：（待完善）</p>
+<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
+]]></content>
+      <tags>
+        <tag>模拟</tag>
+        <tag>思维</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LC 3047. 求交集区域内的最大正方形面积</title>
+    <url>/2024/02/27/LC%203047.%20%E6%B1%82%E4%BA%A4%E9%9B%86%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E9%9D%A2%E7%A7%AF/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>二维平面上存在 <code>n</code> 个矩形。给你两个下标从 <strong>0</strong> 开始的二维整数数组 <code>bottomLeft</code> 和 <code>topRight</code>，两个数组的大小都是 <code>n x 2</code> ，其中 <code>bottomLeft[i]</code> 和 <code>topRight[i]</code> 分别代表第 <code>i</code> 个矩形的 <strong>左下角</strong> 和 <strong>右上角</strong> 坐标。</p>
+<p>我们定义 <strong>向右</strong> 的方向为 x 轴正半轴（<strong>x 坐标增加</strong>），<strong>向左</strong> 的方向为 x 轴负半轴（<strong>x 坐标减少</strong>）。同样地，定义 <strong>向上</strong> 的方向为 y 轴正半轴（<strong>y 坐标增加</strong>）<strong>，向下</strong> 的方向为 y 轴负半轴（<strong>y 坐标减少</strong>）。</p>
+<p>你可以选择一个区域，该区域由两个矩形的 <strong>交集</strong> 形成。你需要找出能够放入该区域 <strong>内</strong> 的 <strong>最大</strong> 正方形面积，并选择最优解。</p>
+<p>返回能够放入交集区域的正方形的 <strong>最大</strong> 可能面积，如果矩形之间不存在任何交集区域，则返回 <code>0</code>。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：bottomLeft = [[1,1],[2,2],[3,1]], topRight = [[3,3],[4,4],[6,6]]</span><br><span class="line">输出：1</span><br><span class="line">解释：边长为 1 的正方形可以放入矩形 0 和矩形 1 的交集区域，或矩形 1 和矩形 2 的交集区域。因此最大面积是边长 * 边长，即 1 * 1 = 1。</span><br><span class="line">可以证明，边长更大的正方形无法放入任何交集区域。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：bottomLeft = [[1,1],[2,2],[1,2]], topRight = [[3,3],[4,4],[3,4]]</span><br><span class="line">输出：1</span><br><span class="line">解释：边长为 1 的正方形可以放入矩形 0 和矩形 1，矩形 1 和矩形 2，或所有三个矩形的交集区域。因此最大面积是边长 * 边长，即 1 * 1 = 1。</span><br><span class="line">可以证明，边长更大的正方形无法放入任何交集区域。</span><br><span class="line">请注意，区域可以由多于两个矩形的交集构成。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例3：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：bottomLeft = [[1,1],[3,3],[3,1]], topRight = [[2,2],[4,4],[4,2]]</span><br><span class="line">输出：0</span><br><span class="line">解释：不存在相交的矩形，因此，返回 0 。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>n == bottomLeft.length == topRight.length</code></li>
+<li><code>2 &lt;= n &lt;= 1e3</code></li>
+<li><code>bottomLeft[i].length == topRight[i].length == 2</code></li>
+<li><code>1 &lt;= bottomLeft[i][0], bottomLeft[i][1] &lt;= 107</code></li>
+<li><code>1 &lt;= topRight[i][0], topRight[i][1] &lt;= 107</code></li>
+<li><code>bottomLeft[i][0] &lt; topRight[i][0]</code></li>
+<li><code>bottomLeft[i][1] &lt; topRight[i][1]</code></li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>此问题为<strong>IOU（Intersection over Union，交并比）</strong>问题，求两个矩形的重叠部分的面积。</p>
+<p>如果矩形有交集，那么交集一定是矩形。因此我们只需要求出这个交集矩形的左下角和右上角。千万不能被特殊情况所迷惑。</p>
+<ul>
+<li><p>左下角横坐标：两个矩形左下角横坐标的最大值。</p>
+</li>
+<li><p>左下角纵坐标：两个矩形左下角纵坐标的最大值。</p>
+</li>
+<li>右上角横坐标：两个矩形右上角横坐标的最小值。</li>
+<li>右上角纵坐标：两个矩形右上角纵坐标的最小值。</li>
+</ul>
+<p>知道坐标就可以算出矩形的长和宽，取二者最小值作为正方形的边长。</p>
+<p>如果矩形没有交集，那么长和宽是负数，在计算面积前判断。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">largestSquareArea</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; bottomLeft, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; topRight)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = bottomLeft.<span class="built_in">size</span>();</span><br><span class="line">        ll ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j ++ )</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="type">int</span> sx1, sy1, tx1, ty1;</span><br><span class="line">                <span class="type">int</span> sx2, sy2, tx2, ty2;</span><br><span class="line">                sx1 = bottomLeft[i][<span class="number">0</span>], sy1 = bottomLeft[i][<span class="number">1</span>];</span><br><span class="line">                tx1 = topRight[i][<span class="number">0</span>], ty1 = topRight[i][<span class="number">1</span>];</span><br><span class="line">                sx2 = bottomLeft[j][<span class="number">0</span>], sy2 = bottomLeft[j][<span class="number">1</span>];</span><br><span class="line">                tx2 = topRight[j][<span class="number">0</span>], ty2 = topRight[j][<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">                <span class="type">int</span> x1 = <span class="built_in">max</span>(sx1, sx2), y1 = <span class="built_in">max</span>(sy1, sy2); <span class="comment">// 左下角</span></span><br><span class="line">                <span class="type">int</span> x2 = <span class="built_in">min</span>(tx1, tx2), y2 = <span class="built_in">min</span>(ty1, ty2); <span class="comment">// 右上角</span></span><br><span class="line">                ll width = <span class="built_in">max</span>(x2 - x1, <span class="number">0</span>), length = <span class="built_in">max</span>(y2 - y1, <span class="number">0</span>);</span><br><span class="line">                ll sz = <span class="built_in">min</span>(width, length);</span><br><span class="line">                <span class="keyword">if</span> (sz &gt; <span class="number">0</span>)</span><br><span class="line">                    ans = <span class="built_in">max</span>(ans, sz * sz);</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
+<p>日拱一卒无有尽，功不唐捐终入海</p>
+<p>这是我们「刷穿算法题」系列文章的第<code>No.0004</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
+<p>同时我也建立了相关仓库：（待完善）</p>
+<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
+]]></content>
+      <tags>
+        <tag>思维</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>tags</title>
     <url>/2023/12/19/tags/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">
@@ -273,5 +274,58 @@
   </div>
 </div>
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
+    <title>LC 735.小行星碰撞</title>
+    <url>/2023/12/26/LC%20735.%E5%B0%8F%E8%A1%8C%E6%98%9F%E7%A2%B0%E6%92%9E/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这是 LeetCode 上的 735.小行星碰撞，难度为 <strong>中等</strong>。</p>
+<p>给定一个整数数组 <code>asteroids</code>，表示在同一行的小行星。</p>
+<p>对于数组中的每一个元素，其绝对值表示小行星的大小，正负表示小行星的移动方向（正表示向右移动，负表示向左移动）。每一颗小行星以相同的速度移动。</p>
+<p>找出碰撞后剩下的所有小行星。碰撞规则：两个小行星相互碰撞，较小的小行星会爆炸。如果两颗小行星大小相同，则两颗小行星都会爆炸。两颗移动方向相同的小行星，永远不会发生碰撞。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：asteroids = [5,10,-5]</span><br><span class="line">输出：[5,10]</span><br><span class="line">解释：10 和 -5 碰撞后只剩下 10 。 5 和 10 永远不会发生碰撞。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：asteroids = [8,-8]</span><br><span class="line">输出：[]</span><br><span class="line">解释：8 和 -8 碰撞后，两者都发生爆炸。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例 3：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：asteroids = [10,2,-5]</span><br><span class="line">输出：[10]</span><br><span class="line">解释：2 和 -5 发生碰撞后剩下 -5 。10 和 -5 发生碰撞后剩下 10 。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>$2&lt;=asteroids.length&lt;=10^4$</li>
+<li><code>-1000 &lt;= asteroids[i] &lt;= 1000</code></li>
+<li><code>asteroids[i] != 0</code></li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>每个行星的运动速度是相同的，如果存在行星 $i$ 向右，行星 $j$ 向左，且二者相邻，那么这两个行星必然会发生碰撞，根据规则判断还剩下几个。</p>
+<p>所以可以模拟一个左右横着的栈 $ans$（右边进，右边出，顶部在最右边）。枚举现在数组中的行星 $i$</p>
+<ul>
+<li>1 如果 $asteroids[i]&lt;0$，则观察 $ans$ 的顶部行星 $j$<ul>
+<li>1-1 若 $asteroids[j]&lt;0$ 或者为空，则 $i$ 入栈</li>
+<li>1-2 若 $asteroids[j]&gt;0$，则 $i,j$ 发生碰撞。<ul>
+<li>若碰撞后 $i$ 消失（也可能和 $j$ 同步消失），则 $i++$，重新枚举</li>
+<li>若碰撞后 $j$ 消失出栈，且 $i$ 未消失，则回到步骤 $1$ </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>2 如果 $asteroids[i]&gt;0$，则直接入栈（此时如果栈顶行星是向向左，则必然栈内所有的行星都是向左的，否则矛盾；如果栈顶行星是向右，则必然是泾渭分明，栈内连续的左边一部分是全部向左，栈内连续的右边一部分是向右）</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">asteroidCollision</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> t: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">bool</span> ok = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">while</span> (!ans.<span class="built_in">empty</span>() &amp;&amp; ans.<span class="built_in">back</span>() &gt; <span class="number">0</span> &amp;&amp; t &lt; <span class="number">0</span>)</span><br><span class="line">            &#123; <span class="comment">// 产生冲突</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">abs</span>(ans.<span class="built_in">back</span>()) &lt; <span class="built_in">abs</span>(t)) ans.<span class="built_in">pop_back</span>();</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">abs</span>(ans.<span class="built_in">back</span>()) == <span class="built_in">abs</span>(t)) </span><br><span class="line">                &#123;</span><br><span class="line">                    ans.<span class="built_in">pop_back</span>();</span><br><span class="line">                    ok = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">abs</span>(ans.<span class="built_in">back</span>()) &gt; <span class="built_in">abs</span>(t)) </span><br><span class="line">                &#123;</span><br><span class="line">                    ok = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (ok) ans.<span class="built_in">push_back</span>(t);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 同样的思路，多设了一个数组来存储向右的行星。注意分类讨论的时候要不重不漏</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">asteroidCollision</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans, ls;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &lt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (ls.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    ans.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">while</span> (!ls.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">abs</span>(ls.<span class="built_in">back</span>()) &lt; <span class="built_in">abs</span>(nums[i]))</span><br><span class="line">                        ls.<span class="built_in">pop_back</span>(); <span class="comment">// 先把向右的、绝对值小的剔除</span></span><br><span class="line">                    <span class="keyword">if</span> (!ls.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">abs</span>(ls.<span class="built_in">back</span>()) == <span class="built_in">abs</span>(nums[i]))</span><br><span class="line">                    &#123; <span class="comment">// 绝对值相等则都剔除，均不进入ans</span></span><br><span class="line">                        ls.<span class="built_in">pop_back</span>();</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!ls.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">abs</span>(ls.<span class="built_in">back</span>()) &gt; <span class="built_in">abs</span>(nums[i]))</span><br><span class="line">                        <span class="keyword">continue</span>; <span class="comment">// 若向右的绝对值大于向左的绝对值，则不操作，等最后一齐把ls中剩余的元素进入ans</span></span><br><span class="line">                    <span class="keyword">else</span> </span><br><span class="line">                        ans.<span class="built_in">push_back</span>(nums[i]); <span class="comment">// 否则让当前的向左的行星进入ans</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                ls.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 只要有向右的和向左的，那么必然要么把向右的全部干掉，要么干掉一部分向右的，然后这个向左的被干掉</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> x: ls)</span><br><span class="line">            ans.<span class="built_in">push_back</span>(x);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
+<p>日拱一卒无有尽，功不唐捐终入海</p>
+<p>这是我们「刷穿算法题」系列文章的第<code>No.0002</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
+<p>同时我也建立了相关仓库：（待完善）</p>
+<p>更多 $tips$，详见我的个人博客：<a href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
+]]></content>
+      <tags>
+        <tag>模拟</tag>
+        <tag>栈</tag>
+      </tags>
   </entry>
 </search>

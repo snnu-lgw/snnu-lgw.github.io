@@ -21,36 +21,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="第一次去sgzx旁听信息技术优质课，此行目的就是学习他人之长处，补足自己之缺点。课程安排是上午3节，下午2节。主题均为《粤教版信息技术必修一4.4.1 for循环的应用》。本文主要记录听课过程中老师们的闪光点和问题，并借鉴提出自己的改进方向。先来打卡拍个照。">
+    <meta name="description" content="这是 LeetCode 上的 3047. 求交集区域内的最大正方形面积[第386场周赛]，难度为中等。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2023年冬信息技术优质课听课游记">
-<meta property="og:url" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/index.html">
+<meta property="og:title" content="LC 3047. 求交集区域内的最大正方形面积">
+<meta property="og:url" content="http://example.com/2024/02/27/LC%203047.%20%E6%B1%82%E4%BA%A4%E9%9B%86%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E9%9D%A2%E7%A7%AF/index.html">
 <meta property="og:site_name" content="Liu&#39;s World">
-<meta property="og:description" content="第一次去sgzx旁听信息技术优质课，此行目的就是学习他人之长处，补足自己之缺点。课程安排是上午3节，下午2节。主题均为《粤教版信息技术必修一4.4.1 for循环的应用》。本文主要记录听课过程中老师们的闪光点和问题，并借鉴提出自己的改进方向。先来打卡拍个照。">
+<meta property="og:description" content="这是 LeetCode 上的 3047. 求交集区域内的最大正方形面积[第386场周赛]，难度为中等。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f1.jpg">
-<meta property="og:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f2.jpg">
-<meta property="og:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f3.png">
-<meta property="og:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f4.jpg">
-<meta property="og:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f5.jpg">
-<meta property="og:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f6.jpg">
-<meta property="article:published_time" content="2023-12-21T00:16:47.000Z">
-<meta property="article:modified_time" content="2023-12-21T01:40:12.720Z">
+<meta property="article:published_time" content="2024-02-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-27T11:41:41.368Z">
 <meta property="article:author" content="Guowei Liu">
-<meta property="article:tag" content="信息技术">
-<meta property="article:tag" content="优质课">
+<meta property="article:tag" content="思维">
+<meta property="article:tag" content="数学">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f1.jpg">
 
 
-<link rel="canonical" href="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/">
+<link rel="canonical" href="http://example.com/2024/02/27/LC%203047.%20%E6%B1%82%E4%BA%A4%E9%9B%86%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E9%9D%A2%E7%A7%AF/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/","path":"2023/12/21/2023年冬信息技术优质课听课游记/","title":"2023年冬信息技术优质课听课游记"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/02/27/LC%203047.%20%E6%B1%82%E4%BA%A4%E9%9B%86%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E9%9D%A2%E7%A7%AF/","path":"2024/02/27/LC 3047. 求交集区域内的最大正方形面积/","title":"LC 3047. 求交集区域内的最大正方形面积"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>2023年冬信息技术优质课听课游记 | Liu's World</title>
+<title>LC 3047. 求交集区域内的最大正方形面积 | Liu's World</title>
   
 
 
@@ -155,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#sgez%E6%9D%8E%E8%80%81%E5%B8%88"><span class="nav-number">1.</span> <span class="nav-text">sgez李老师</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sgez%E4%BB%98%E8%80%81%E5%B8%88"><span class="nav-number">2.</span> <span class="nav-text">sgez付老师</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdzx%E6%9D%8E%E8%80%81%E5%B8%88"><span class="nav-number">3.</span> <span class="nav-text">xdzx李老师</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdzx-%E5%BC%A0%E8%80%81%E5%B8%88"><span class="nav-number">4.</span> <span class="nav-text">xdzx 张老师</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sgyz-%E5%AF%87%E8%80%81%E5%B8%88"><span class="nav-number">5.</span> <span class="nav-text">sgyz 寇老师</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E5%8F%8D%E6%80%9D"><span class="nav-number">6.</span> <span class="nav-text">个人反思</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -206,7 +199,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/27/LC%203047.%20%E6%B1%82%E4%BA%A4%E9%9B%86%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E9%9D%A2%E7%A7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/fanren.jpg">
@@ -219,12 +212,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="2023年冬信息技术优质课听课游记 | Liu's World">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="LC 3047. 求交集区域内的最大正方形面积 | Liu's World">
+      <meta itemprop="description" content="这是 LeetCode 上的 3047. 求交集区域内的最大正方形面积[第386场周赛]，难度为中等。">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          2023年冬信息技术优质课听课游记
+          LC 3047. 求交集区域内的最大正方形面积
         </h1>
 
         <div class="post-meta-container">
@@ -236,7 +229,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-12-21 08:16:47 / 修改时间：09:40:12" itemprop="dateCreated datePublished" datetime="2023-12-21T08:16:47+08:00">2023-12-21</time>
+      <time title="创建时间：2024-02-27 00:00:00 / 修改时间：19:41:41" itemprop="dateCreated datePublished" datetime="2024-02-27T00:00:00+08:00">2024-02-27</time>
     </span>
 
   
@@ -253,7 +246,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -264,94 +257,58 @@
     </span>
 </div>
 
+            <div class="post-description">这是 LeetCode 上的 3047. 求交集区域内的最大正方形面积[第386场周赛]，难度为中等。</div>
         </div>
       </header>
 
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>第一次去sgzx旁听信息技术优质课，此行目的就是学习他人之长处，补足自己之缺点。课程安排是上午3节，下午2节。主题均为《粤教版信息技术必修一4.4.1 for循环的应用》。本文主要记录听课过程中老师们的闪光点和问题，并借鉴提出自己的改进方向。先来打卡拍个照。</p>
-<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f1.jpg" alt="f1.jpq"></p>
-<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f2.jpg" alt></p>
-<span id="more"></span>
-<h3 id="sgez李老师"><a href="#sgez李老师" class="headerlink" title="sgez李老师"></a>sgez李老师</h3><p>我觉得这个老师讲的可谓槽点颇多，但评委貌似觉得他讲得还可以，因为能够顺利地把知识点传达清楚，<strong>简单也是一个亮点</strong>。</p>
-<p>缺点在于：</p>
+    <div class="post-body" itemprop="articleBody"><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>二维平面上存在 <code>n</code> 个矩形。给你两个下标从 <strong>0</strong> 开始的二维整数数组 <code>bottomLeft</code> 和 <code>topRight</code>，两个数组的大小都是 <code>n x 2</code> ，其中 <code>bottomLeft[i]</code> 和 <code>topRight[i]</code> 分别代表第 <code>i</code> 个矩形的 <strong>左下角</strong> 和 <strong>右上角</strong> 坐标。</p>
+<p>我们定义 <strong>向右</strong> 的方向为 x 轴正半轴（<strong>x 坐标增加</strong>），<strong>向左</strong> 的方向为 x 轴负半轴（<strong>x 坐标减少</strong>）。同样地，定义 <strong>向上</strong> 的方向为 y 轴正半轴（<strong>y 坐标增加</strong>）<strong>，向下</strong> 的方向为 y 轴负半轴（<strong>y 坐标减少</strong>）。</p>
+<p>你可以选择一个区域，该区域由两个矩形的 <strong>交集</strong> 形成。你需要找出能够放入该区域 <strong>内</strong> 的 <strong>最大</strong> 正方形面积，并选择最优解。</p>
+<p>返回能够放入交集区域的正方形的 <strong>最大</strong> 可能面积，如果矩形之间不存在任何交集区域，则返回 <code>0</code>。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：bottomLeft = [[1,1],[2,2],[3,1]], topRight = [[3,3],[4,4],[6,6]]</span><br><span class="line">输出：1</span><br><span class="line">解释：边长为 1 的正方形可以放入矩形 0 和矩形 1 的交集区域，或矩形 1 和矩形 2 的交集区域。因此最大面积是边长 * 边长，即 1 * 1 = 1。</span><br><span class="line">可以证明，边长更大的正方形无法放入任何交集区域。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：bottomLeft = [[1,1],[2,2],[1,2]], topRight = [[3,3],[4,4],[3,4]]</span><br><span class="line">输出：1</span><br><span class="line">解释：边长为 1 的正方形可以放入矩形 0 和矩形 1，矩形 1 和矩形 2，或所有三个矩形的交集区域。因此最大面积是边长 * 边长，即 1 * 1 = 1。</span><br><span class="line">可以证明，边长更大的正方形无法放入任何交集区域。</span><br><span class="line">请注意，区域可以由多于两个矩形的交集构成。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例3：</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：bottomLeft = [[1,1],[3,3],[3,1]], topRight = [[2,2],[4,4],[4,2]]</span><br><span class="line">输出：0</span><br><span class="line">解释：不存在相交的矩形，因此，返回 0 。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>提示：</strong></p>
 <ul>
-<li>上课未起立喊班</li>
-<li>印发的学案、PPT文字不完全一致、PPT很多无用的图 字</li>
-<li>讲解缩进时没有阐述清楚是 $4$ 个空格（当然后面我才想到默认以前的课程已经讲过这个知识点了）</li>
-<li>range() 的读音是“ruangao”？</li>
-<li>板书略微有点乱呢</li>
-<li>课堂小结处写的是“For 循环”（明明找错的时候大写的 $F$ 就不对，还最后这么写）</li>
-<li>讲课时没有在课堂内转动</li>
-<li>在学案上找出来一个较大错误：流程图用错符号而且还是死循环？</li>
+<li><code>n == bottomLeft.length == topRight.length</code></li>
+<li><code>2 &lt;= n &lt;= 1e3</code></li>
+<li><code>bottomLeft[i].length == topRight[i].length == 2</code></li>
+<li><code>1 &lt;= bottomLeft[i][0], bottomLeft[i][1] &lt;= 107</code></li>
+<li><code>1 &lt;= topRight[i][0], topRight[i][1] &lt;= 107</code></li>
+<li><code>bottomLeft[i][0] &lt; topRight[i][0]</code></li>
+<li><code>bottomLeft[i][1] &lt; topRight[i][1]</code></li>
 </ul>
-<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f3.png" alt></p>
-<p>优点：</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>此问题为<strong>IOU（Intersection over Union，交并比）</strong>问题，求两个矩形的重叠部分的面积。</p>
+<p>如果矩形有交集，那么交集一定是矩形。因此我们只需要求出这个交集矩形的左下角和右上角。千万不能被特殊情况所迷惑。</p>
 <ul>
-<li>提出了一个简单又可实际操作的拍 $7$ 游戏（当时我就觉得这不是喝酒小游戏嘛hhh）</li>
-<li>遇到的随机学生很活跃，能够积极回答问题，显得本堂课很优质</li>
-<li>开局先分小组，最后也对小组计分进行了评价</li>
-</ul>
-<h3 id="sgez付老师"><a href="#sgez付老师" class="headerlink" title="sgez付老师"></a>sgez付老师</h3><p>付老师讲的我觉得是比前一个老师好的（教态、声音），但评委描述说内容太多，有为了结构完整而硬加的嫌疑，且学生配合程度较低，显得本节课不是那么的优质。</p>
-<p>缺点：</p>
-<ul>
-<li>学案字体杂乱，有截图，有大有小，排版布局不好</li>
-<li>分组计分没有利用起来，流于形式</li>
-<li>视频传授知识的部分较多，知识点过多</li>
-<li>案例是“选择最优借贷方式”，对学生不友好，距离太远</li>
-</ul>
-<p>优点：</p>
-<ul>
-<li>让学生自主运行代码，体验缩进的区别，循循善诱</li>
-<li>学案结构完整，有自我评价、作业上交、课后思考，但存在硬凑嫌疑</li>
-<li>最后有一句话上升价值，思政效果好</li>
-</ul>
-<h3 id="xdzx李老师"><a href="#xdzx李老师" class="headerlink" title="xdzx李老师"></a>xdzx李老师</h3><p>李老师在本堂课的表现还是让我耳目一新的，确实是认真起来了。但评委觉得课堂很沉闷，一直在点学生回答问题。到本节课我已经开始疲惫了，听不下去了快hh。</p>
-<p>缺点：</p>
-<ul>
-<li><p>一些小错误，已经不去记录了~~</p>
+<li><p>左下角横坐标：两个矩形左下角横坐标的最大值。</p>
 </li>
-<li><p>学生回答积极性不高，老师运用软件能力有待提高</p>
+<li><p>左下角纵坐标：两个矩形左下角纵坐标的最大值。</p>
 </li>
+<li>右上角横坐标：两个矩形右上角横坐标的最小值。</li>
+<li>右上角纵坐标：两个矩形右上角纵坐标的最小值。</li>
 </ul>
-<p>优点：</p>
-<ul>
-<li>开头放亚运会高燃视频，由统计金牌数引出for循环，语言组织还不错呢</li>
-</ul>
+<p>知道坐标就可以算出矩形的长和宽，取二者最小值作为正方形的边长。</p>
+<p>如果矩形没有交集，那么长和宽是负数，在计算面积前判断。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">largestSquareArea</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; bottomLeft, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; topRight)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = bottomLeft.<span class="built_in">size</span>();</span><br><span class="line">        ll ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j ++ )</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="type">int</span> sx1, sy1, tx1, ty1;</span><br><span class="line">                <span class="type">int</span> sx2, sy2, tx2, ty2;</span><br><span class="line">                sx1 = bottomLeft[i][<span class="number">0</span>], sy1 = bottomLeft[i][<span class="number">1</span>];</span><br><span class="line">                tx1 = topRight[i][<span class="number">0</span>], ty1 = topRight[i][<span class="number">1</span>];</span><br><span class="line">                sx2 = bottomLeft[j][<span class="number">0</span>], sy2 = bottomLeft[j][<span class="number">1</span>];</span><br><span class="line">                tx2 = topRight[j][<span class="number">0</span>], ty2 = topRight[j][<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">                <span class="type">int</span> x1 = <span class="built_in">max</span>(sx1, sx2), y1 = <span class="built_in">max</span>(sy1, sy2); <span class="comment">// 左下角</span></span><br><span class="line">                <span class="type">int</span> x2 = <span class="built_in">min</span>(tx1, tx2), y2 = <span class="built_in">min</span>(ty1, ty2); <span class="comment">// 右上角</span></span><br><span class="line">                ll width = <span class="built_in">max</span>(x2 - x1, <span class="number">0</span>), length = <span class="built_in">max</span>(y2 - y1, <span class="number">0</span>);</span><br><span class="line">                ll sz = <span class="built_in">min</span>(width, length);</span><br><span class="line">                <span class="keyword">if</span> (sz &gt; <span class="number">0</span>)</span><br><span class="line">                    ans = <span class="built_in">max</span>(ans, sz * sz);</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>上午的听课就结束了，本来说是能管饭，后面因各种原因让我们自己出去吃。学校在镇上，好吃的选择有两个：羊肉汤 or 拉面，想着可能长时间不会来一次，就去吃了前者，据说在当地还很出名呢。 其实也就那样  </p>
-<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f4.jpg" alt></p>
-<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f5.jpg" alt></p>
-<p><img src="/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/f6.jpg" alt></p>
-<hr>
-<p>在办公室休息了一会，冬日阳光真好，继续下午的听课。</p>
-<h3 id="xdzx-张老师"><a href="#xdzx-张老师" class="headerlink" title="xdzx 张老师"></a>xdzx 张老师</h3><p>学姐的课已经听了一次了，根本没有问题，能顺利讲下来就是很大的成功。</p>
-<p>优点：</p>
-<ul>
-<li>开篇视频《跪行巨人》，由捐款引出for循环（地震受灾），有思政价值</li>
-<li>能分析问题，抽象数学模型</li>
-<li>探究活动，由自然语言到流程图</li>
-<li>板书还得继续练</li>
-</ul>
-<h3 id="sgyz-寇老师"><a href="#sgyz-寇老师" class="headerlink" title="sgyz 寇老师"></a>sgyz 寇老师</h3><p>到此已经听不下去了，还得坚持！</p>
-<p>缺点：</p>
-<ul>
-<li>只是说开始上课，没有喊班（问题不大）</li>
-<li>这个姐也是很厉害的，就是有个口头禅 “$i$”</li>
-</ul>
-<p>优点：</p>
-<ul>
-<li>由《袁隆平杂交水稻》亩产的变化引出 $print$ 语句和 $for$ 循环</li>
-<li>能用动画展示for循环一般格式及使用方法</li>
-<li>用扩音器，声音可以</li>
-</ul>
-<h3 id="个人反思"><a href="#个人反思" class="headerlink" title="个人反思"></a>个人反思</h3><ol>
-<li>读课标，讲课的首要任务是能把知识点给学生传递清楚，不能过于追求结构完整</li>
-<li>板书还得需要练，关键时候是个很强的加分项</li>
-<li>声音要洪亮</li>
-<li>开头结尾要把握好，不一定是视频，但一定要有新意，也要让学生参与进来。要体现思政课思想</li>
-</ol>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>千里之行始于足下</p>
+<p>日拱一卒无有尽，功不唐捐终入海</p>
+<p>这是我们「刷穿算法题」系列文章的第<code>No.0004</code> 篇，系列开始于20xx/xx/xx。我会真实呈现做题过程中的一些小错误，努力做到生动、形象、严谨、简洁，并给题目录制讲解视频，发到我的b站上，欢迎关注一键三连噢，地址详见：<a target="_blank" rel="noopener" href="https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0">https://space.bilibili.com/490734375?spm_id_from=333.1007.0.0</a> </p>
+<p>同时我也建立了相关仓库：（待完善）</p>
+<p>更多 $tips$，详见我的个人博客：<a target="_blank" rel="noopener" href="https://snnu-lgw.github.io/">https://snnu-lgw.github.io/</a></p>
 
     </div>
 
@@ -369,7 +326,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2023/12/21/2023%E5%B9%B4%E5%86%AC%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E4%BC%98%E8%B4%A8%E8%AF%BE%E5%90%AC%E8%AF%BE%E6%B8%B8%E8%AE%B0/" title="2023年冬信息技术优质课听课游记">http://example.com/2023/12/21/2023年冬信息技术优质课听课游记/</a>
+      <a href="http://example.com/2024/02/27/LC%203047.%20%E6%B1%82%E4%BA%A4%E9%9B%86%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E9%9D%A2%E7%A7%AF/" title="LC 3047. 求交集区域内的最大正方形面积">http://example.com/2024/02/27/LC 3047. 求交集区域内的最大正方形面积/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -378,22 +335,19 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/" rel="tag"># 信息技术</a>
-              <a href="/tags/%E4%BC%98%E8%B4%A8%E8%AF%BE/" rel="tag"># 优质课</a>
+              <a href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag"># 思维</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/12/19/tags/" rel="prev" title="tags">
-                  <i class="fa fa-angle-left"></i> tags
+                <a href="/2023/12/28/LC%20440.%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E7%AC%ACK%E5%B0%8F%E6%95%B0%E5%AD%97/" rel="prev" title="LC 440.字典序最小的第K小数字">
+                  <i class="fa fa-angle-left"></i> LC 440.字典序最小的第K小数字
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/12/26/LC%2016.%20%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/" rel="next" title="LC 16. 最接近的三数之和">
-                  LC 16. 最接近的三数之和 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
